@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
+import { clientServer } from "../serverConfig";
 import { useNavigate } from "react-router-dom";
 import "./Login.css";
 
@@ -19,10 +20,7 @@ const Login = () => {
     e.preventDefault();
     const endpoint = isRegister ? "/api/auth/register" : "/api/auth/login";
     try {
-      const { data } = await axios.post(
-        `http://localhost:5000${endpoint}`,
-        formData,
-      );
+      const { data } = await clientServer.post(endpoint, formData);
       localStorage.setItem("userInfo", JSON.stringify(data));
       navigate("/dashboard");
     } catch (error) {

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
+import { clientServer } from "../serverConfig";
 import { Link, useNavigate } from "react-router-dom";
 import "./AllAgents.css";
 
@@ -25,10 +25,7 @@ const AllAgents = () => {
   const fetchAgents = async () => {
     try {
       // Reusing the existing API that already populates leads
-      const { data } = await axios.get(
-        "http://localhost:5000/api/agents",
-        config,
-      );
+      const { data } = await clientServer.get("/api/agents", config);
       setAgents(data);
     } catch (error) {
       console.error("Error fetching agents", error);
@@ -43,7 +40,7 @@ const AllAgents = () => {
       )
     ) {
       try {
-        await axios.delete(`http://localhost:5000/api/agents/${id}`, config);
+        await clientServer.delete(`/api/agents/${id}`, config);
         alert("Agent deleted. Leads have been redistributed.");
         fetchAgents(); // Refresh the list to see changes
       } catch (error) {
