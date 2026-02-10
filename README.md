@@ -1,6 +1,6 @@
 # Lead Distribution System - Intelligent Sales CRM
 
-[![Live Demo](https://img.shields.io/badge/Live-Demo-success)](https://lead-distribution-frontend.vercel.app/)
+[![Live Demo](https://img.shields.io/badge/Live-Demo-success)](https://lead-distribution-system.vercel.app/)
 
 A comprehensive full-stack CRM platform built with the MERN stack, offering intelligent automation for sales teams. It features automated Round-Robin lead distribution, bulk CSV processing, and dynamic workload re-balancing to ensure fair and efficient sales operations.
 
@@ -164,8 +164,8 @@ The application is deployed with a modern cloud infrastructure:
 
 The application's frontend is deployed on **Vercel** with its backend deployed on **Render** platform:
 
-- **Frontend**: `https://lead-distribution-system-frontend.vercel.app/`
-- **Backend API**: `https://lead-distribution-api.onrender.com`
+- **Frontend**: `https://lead-distribution-system.vercel.app/`
+- **Backend API**: `https://lead-distribution-system-backend.onrender.com`
 
 ### Production Features
 
