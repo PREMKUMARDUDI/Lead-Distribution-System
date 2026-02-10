@@ -1,4 +1,4 @@
-const { default: axios } = require("axios");
+import axios from "axios";
 
 export const BASE_URL = "https://lead-distribution-system-backend.onrender.com";
 
