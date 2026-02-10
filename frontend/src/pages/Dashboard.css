@@ -1,0 +1,131 @@
+.dashboard-container {
+  padding-block: 20px;
+  font-family: "Segoe UI", sans-serif;
+  padding-inline: 1rem;
+  margin-top: -2rem;
+}
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  border-bottom: 2px solid #eee;
+}
+
+.logout-btn {
+  background: #dc3545;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+
+  &:hover {
+    border: 1.5px solid white;
+  }
+}
+
+.main-content {
+  min-width: fit-content;
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: 20px;
+}
+
+.agent-form-section input {
+  background: transparent;
+}
+
+.mobile-group {
+  display: flex;
+  gap: 10px;
+}
+
+.mobile-group select option {
+  background: rgba(0, 0, 0, 0.877);
+  /* color: white; */
+}
+
+.code-select {
+  width: fit-content;
+  font-size: 0.75rem;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.mobile-input {
+  width: 65%;
+}
+
+/* Upload Section */
+.upload-section,
+.agent-form-section {
+  background: rgba(0, 0, 0, 0.215);
+  padding: 20px;
+  border: 1px solid #eee;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  margin-bottom: 20px;
+}
+.file-input {
+  margin: 10px 0;
+  background-color: #49505798;
+  border-radius: 0.25rem;
+  display: block;
+}
+.action-btn {
+  background: #28a745;
+  color: white;
+  padding: 8px 16px;
+  border: none;
+  border-radius: 0.25rem;
+  cursor: pointer;
+
+  &:hover {
+    border: 1.5px solid white;
+  }
+}
+
+.upload-section > .action-btn {
+  margin-top: 0.5rem;
+}
+
+/* Agent List */
+.agent-list-section {
+  background: rgba(0, 0, 0, 0.215);
+  padding: 20px;
+  border-radius: 8px;
+  /* box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); */
+  border: 1px solid #eee;
+}
+.agent-card {
+  border: 1px solid #eee;
+  padding: 15px;
+  margin-bottom: 15px;
+  border-radius: 6px;
+}
+.agent-header {
+  display: flex;
+  justify-content: space-between;
+  font-weight: bold;
+  color: white;
+  border-bottom: 1px solid #eee;
+  padding-bottom: 5px;
+  margin-bottom: 10px;
+}
+.lead-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9rem;
+}
+.lead-table th,
+.lead-table td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: left;
+}
+.lead-table th {
+  background-color: #49505798;
+}
