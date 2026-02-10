@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
+import { clientServer } from "../serverConfig";
 import { Link, useNavigate } from "react-router-dom";
 import "./AllAgents.css"; // Reusing your existing table styles
 
@@ -20,10 +20,7 @@ const AllLeads = () => {
 
   const fetchLeads = async () => {
     try {
-      const { data } = await axios.get(
-        "http://localhost:5000/api/leads",
-        config,
-      );
+      const { data } = await clientServer.get("/api/leads", config);
       setLeads(data);
     } catch (error) {
       console.error("Error fetching leads:", error);
@@ -33,7 +30,7 @@ const AllLeads = () => {
   const handleDelete = async (id, name) => {
     if (window.confirm(`Are you sure you want to delete lead "${name}"?`)) {
       try {
-        await axios.delete(`http://localhost:5000/api/leads/${id}`, config);
+        await clientServer.delete(`/api/leads/${id}`, config);
         alert("Lead deleted successfully.");
         fetchLeads(); // Refresh table
       } catch (error) {

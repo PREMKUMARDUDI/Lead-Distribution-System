@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
+import { clientServer } from "../serverConfig";
 import { useNavigate, Link } from "react-router-dom";
 import "./Dashboard.css";
 
@@ -40,10 +40,7 @@ const Dashboard = () => {
 
   const fetchAgents = async () => {
     try {
-      const { data } = await axios.get(
-        "http://localhost:5000/api/agents",
-        config,
-      );
+      const { data } = await clientServer.get("/api/agents", config);
       setAgents(data);
     } catch (error) {
       console.error(error);
@@ -57,11 +54,7 @@ const Dashboard = () => {
         ...newAgent,
         mobile: `${selectedCode} ${newAgent.mobile}`,
       };
-      await axios.post(
-        "http://localhost:5000/api/agents",
-        finalAgentData,
-        config,
-      );
+      await clientServer.post("/api/agents", finalAgentData, config);
       alert("Agent Added Successfully!");
       setNewAgent({ name: "", email: "", mobile: "", password: "" });
       fetchAgents();
@@ -75,7 +68,7 @@ const Dashboard = () => {
     const formData = new FormData();
     formData.append("file", file);
     try {
-      await axios.post("http://localhost:5000/api/upload", formData, config);
+      await clientServer.post("/api/upload", formData, config);
       alert("File uploaded and distributed successfully!");
       fetchAgents(); // Refresh list to show new leads
     } catch (error) {
