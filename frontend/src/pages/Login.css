@@ -2,20 +2,18 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
-  background-color: #3d4c62;
-  min-width: 100vw;
+  margin-top: 6rem;
 }
 .auth-form {
-  background: rgba(255, 255, 255, 0.76);
+  background: rgba(0, 0, 0, 0.215);
   padding: 2rem;
   border-radius: 8px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   width: 350px;
+  border: 1px solid #eeeeee67;
 }
 .auth-form h2 {
   text-align: center;
-  color: #333;
   margin-bottom: 1.5rem;
 }
 .form-group {
@@ -26,6 +24,8 @@
   padding: 10px;
   border: 1px solid #ccc;
   border-radius: 4px;
+  background-color: transparent;
+  color: white;
   box-sizing: border-box; /* Important for padding */
 }
 .auth-btn {
