@@ -128,6 +128,8 @@ const Dashboard = () => {
                     setNewAgent({ ...newAgent, email: e.target.value })
                   }
                   required
+                  pattern=".+@gmail\.com"
+                  title="Email must end with @gmail.com"
                   className="form-control"
                 />
               </div>
@@ -145,11 +147,20 @@ const Dashboard = () => {
                 </select>
                 <input
                   placeholder="Mobile Number"
-                  type="number"
+                  type="text"
+                  maxLength="10"
+                  pattern="[0-9]{10}"
+                  title="Please enter exactly 10 digits"
                   value={newAgent.mobile}
-                  onChange={(e) =>
-                    setNewAgent({ ...newAgent, mobile: e.target.value })
-                  }
+                  onChange={(e) => {
+                    // Regex: Only allow numbers (0-9)
+                    const re = /^[0-9\b]+$/;
+
+                    // Update state ONLY if value is empty or numbers
+                    if (e.target.value === "" || re.test(e.target.value)) {
+                      setNewAgent({ ...newAgent, mobile: e.target.value });
+                    }
+                  }}
                   required
                   className="form-control mobile-input"
                 />
