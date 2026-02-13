@@ -20,6 +20,8 @@ A comprehensive full-stack CRM platform built with the MERN stack, offering inte
 - **Smart Deletion Logic**: "Fail-safe" deletion that automatically redistributes a deleted agent's leads to the remaining team
 - **Cascading Cleanup**: Deleting a lead surgically removes itself from the associated agent from all agents
 - **Real-time Updates**: Instant reflection of lead assignment changes across the dashboard
+- **Creator-Only Deletion**: Enforces strict ownership protocols where agents and leads can _only_ be deleted by the administrator who created them.
+- **Optimized Performance**: Implements React Context API (`DataContext`) to manage global state, eliminating redundant API calls and ensuring instant data availability during page navigation.
 
 ## 🏗️ Architecture
 
@@ -83,6 +85,8 @@ LeadDistributionSystem/
 │   └── package.json                  # Backend dependencies
 ├── frontend/                         # React application
 │   ├── src/
+│   │   ├── context/                  # Context API for Global State
+│   │   │   └── DataContext.jsx       # Centralized Data Provider
 │   │   ├── pages/                    # Application Views
 │   │   │   ├── Login.jsx             # Admin authentication
 │   │   │   ├── Dashboard.jsx         # Main control panel
@@ -138,6 +142,7 @@ LeadDistributionSystem/
   mobile: String (required),
   password: String (hashed),
   leads: [{ type: ObjectId, ref: 'Lead' }],
+  createdBy: { type: ObjectId, ref: 'User', required: true }
   createdAt: Date
 }
 ```
@@ -150,6 +155,7 @@ LeadDistributionSystem/
   phone: String (required),
   notes: String,
   assignedAgent: { type: ObjectId, ref: 'Agent' },
+  createdBy: { type: ObjectId, ref: 'User', required: true }
   createdAt: Date
 }
 ```
