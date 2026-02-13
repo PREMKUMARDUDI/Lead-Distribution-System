@@ -1,11 +1,12 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useContext } from "react";
 import { clientServer } from "../serverConfig";
 import { Link, useNavigate } from "react-router-dom";
+import { DataContext } from "../context/DataContext.jsx";
 import "./AllAgents.css";
 
 const AllAgents = () => {
-  const [agents, setAgents] = useState([]);
   const navigate = useNavigate();
+  const { agents, fetchAgents } = useContext(DataContext);
 
   // Get User Info for Token
   const userInfo = JSON.parse(localStorage.getItem("userInfo"));
@@ -17,21 +18,8 @@ const AllAgents = () => {
   useEffect(() => {
     if (!userInfo) {
       navigate("/"); // Redirect to login if not authenticated
-    } else {
-      fetchAgents();
     }
-  }, [navigate]);
-
-  const fetchAgents = async () => {
-    try {
-      // Reusing the existing API that already populates leads
-      const { data } = await clientServer.get("/api/agents", config);
-      setAgents(data);
-    } catch (error) {
-      console.error("Error fetching agents", error);
-      alert("Failed to load agents");
-    }
-  };
+  }, [navigate, userInfo]);
 
   const handleDelete = async (id, name) => {
     if (
@@ -44,7 +32,7 @@ const AllAgents = () => {
         alert("Agent deleted. Leads have been redistributed.");
         fetchAgents(); // Refresh the list to see changes
       } catch (error) {
-        alert(error.response?.data?.message || "Delete failed");
+        alert(error.response?.data?.message || "Delete failed!");
       }
     }
   };

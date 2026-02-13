@@ -1,11 +1,12 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { clientServer } from "../serverConfig";
 import { useNavigate, Link } from "react-router-dom";
+import { DataContext } from "../context/DataContext.jsx";
 import "./Dashboard.css";
 
 const Dashboard = () => {
   const navigate = useNavigate();
-  const [agents, setAgents] = useState([]);
+  const { agents, fetchAgents } = useContext(DataContext);
   const [file, setFile] = useState(null);
 
   // Agent Form State
@@ -31,20 +32,10 @@ const Dashboard = () => {
 
   useEffect(() => {
     if (!userInfo) navigate("/");
-    fetchAgents();
-  }, [navigate]);
+  }, [navigate, userInfo]);
 
   const config = {
     headers: { Authorization: `Bearer ${userInfo?.token}` },
-  };
-
-  const fetchAgents = async () => {
-    try {
-      const { data } = await clientServer.get("/api/agents", config);
-      setAgents(data);
-    } catch (error) {
-      console.error(error);
-    }
   };
 
   const handleAgentSubmit = async (e) => {

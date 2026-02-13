@@ -1,11 +1,14 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useContext } from "react";
 import { clientServer } from "../serverConfig";
 import { Link, useNavigate } from "react-router-dom";
+import { DataContext } from "../context/DataContext.jsx";
 import "./AllAgents.css"; // Reusing your existing table styles
 
 const AllLeads = () => {
-  const [leads, setLeads] = useState([]);
   const navigate = useNavigate();
+  const { leads, fetchLeads } = useContext(DataContext);
+
+  // Get User Info for Token
   const userInfo = JSON.parse(localStorage.getItem("userInfo"));
 
   // Define config at the top level
@@ -15,17 +18,7 @@ const AllLeads = () => {
 
   useEffect(() => {
     if (!userInfo) navigate("/");
-    fetchLeads();
-  }, [navigate]);
-
-  const fetchLeads = async () => {
-    try {
-      const { data } = await clientServer.get("/api/leads", config);
-      setLeads(data);
-    } catch (error) {
-      console.error("Error fetching leads:", error);
-    }
-  };
+  }, [navigate, userInfo]);
 
   const handleDelete = async (id, name) => {
     if (window.confirm(`Are you sure you want to delete lead "${name}"?`)) {
