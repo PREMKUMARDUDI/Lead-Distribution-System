@@ -53,6 +53,7 @@ export const uploadLeads = async (req, res) => {
         phone: row.Phone,
         notes: row.Notes || "",
         assignedAgent: selectedAgent._id,
+        createdBy: req.user._id,
       };
 
       leadsToInsert.push(newLead);

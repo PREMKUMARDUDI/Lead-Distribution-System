@@ -80,58 +80,71 @@ const AllAgents = () => {
         </thead>
         <tbody>
           {agents.length > 0 ? (
-            agents.map((agent) => (
-              <tr key={agent._id}>
-                <td>
-                  <strong>{agent.name}</strong>
-                </td>
-                <td>
-                  <div style={{ color: "gray" }}>{agent.email}</div>
-                  <div style={{ color: "gray", fontSize: "0.9rem" }}>
-                    {agent.mobile}
-                  </div>
-                </td>
-                <td>
-                  {agent.leads && agent.leads.length > 0 ? (
-                    <table className="nested-leads-table">
-                      <thead>
-                        <tr>
-                          <th>Lead Name</th>
-                          <th>Phone</th>
-                          <th>Notes</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        {agent.leads.map((lead) => (
-                          <tr key={lead._id}>
-                            <td>{lead.firstName}</td>
-                            <td>{lead.phone}</td>
-                            <td>{lead.notes}</td>
+            agents.map((agent) => {
+              const isCreator = agent.createdBy === userInfo._id;
+
+              return (
+                <tr key={agent._id}>
+                  <td>
+                    <strong>{agent.name}</strong>
+                  </td>
+                  <td>
+                    <div style={{ color: "gray" }}>{agent.email}</div>
+                    <div style={{ color: "gray", fontSize: "0.9rem" }}>
+                      {agent.mobile}
+                    </div>
+                  </td>
+                  <td>
+                    {agent.leads && agent.leads.length > 0 ? (
+                      <table className="nested-leads-table">
+                        <thead>
+                          <tr>
+                            <th>Lead Name</th>
+                            <th>Phone</th>
+                            <th>Notes</th>
                           </tr>
-                        ))}
-                      </tbody>
-                    </table>
-                  ) : (
-                    <span className="no-leads">No leads assigned yet.</span>
-                  )}
-                </td>
-                <td style={{ textAlign: "center" }}>
-                  <button
-                    onClick={() => handleDelete(agent._id, agent.name)}
-                    style={{
-                      backgroundColor: "#dc3545",
-                      color: "white",
-                      border: "none",
-                      padding: "5px 10px",
-                      borderRadius: "4px",
-                      cursor: "pointer",
-                    }}
-                  >
-                    Delete
-                  </button>
-                </td>
-              </tr>
-            ))
+                        </thead>
+                        <tbody>
+                          {agent.leads.map((lead) => (
+                            <tr key={lead._id}>
+                              <td>{lead.firstName}</td>
+                              <td>{lead.phone}</td>
+                              <td>{lead.notes}</td>
+                            </tr>
+                          ))}
+                        </tbody>
+                      </table>
+                    ) : (
+                      <span className="no-leads">No leads assigned yet.</span>
+                    )}
+                  </td>
+                  <td style={{ textAlign: "center" }}>
+                    <button
+                      onClick={() =>
+                        isCreator && handleDelete(agent._id, agent.name)
+                      }
+                      disabled={!isCreator}
+                      title={
+                        !isCreator
+                          ? "Only the creator can delete this agent"
+                          : "Delete Agent"
+                      }
+                      style={{
+                        backgroundColor: isCreator ? "#dc3545" : "#dc354687",
+                        color: "white",
+                        border: "none",
+                        padding: "5px 10px",
+                        borderRadius: "4px",
+                        cursor: isCreator ? "pointer" : "not-allowed",
+                        opacity: isCreator ? 1 : 0.6,
+                      }}
+                    >
+                      {isCreator ? "Delete" : "Restricted"}
+                    </button>
+                  </td>
+                </tr>
+              );
+            })
           ) : (
             <tr>
               <td colSpan="3" style={{ textAlign: "center" }}>

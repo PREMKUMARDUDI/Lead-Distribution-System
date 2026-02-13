@@ -21,7 +21,8 @@ export const createAgent = async (req, res) => {
       email,
       mobile,
       password: hashedPassword,
-      leads: [], // Start with empty leads
+      leads: [],
+      createdBy: req.user._id,
     });
 
     // ============================================================
@@ -104,6 +105,13 @@ export const deleteAgent = async (req, res) => {
     const agentToDelete = await Agent.findById(id);
     if (!agentToDelete) {
       return res.status(404).json({ message: "Agent not found" });
+    }
+
+    // SECURITY CHECK
+    if (agentToDelete.createdBy.toString() !== req.user._id.toString()) {
+      return res.status(403).json({
+        message: "Not authorized. Only the creator can delete this agent.",
+      });
     }
 
     const leadsToRedistribute = agentToDelete.leads || []; // Array of Lead IDs

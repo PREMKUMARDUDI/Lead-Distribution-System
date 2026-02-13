@@ -23,6 +23,15 @@ export const deleteLead = async (req, res) => {
       return res.status(404).json({ message: "Lead not found" });
     }
 
+    // SECURITY CHECK
+    if (lead.createdBy.toString() !== req.user._id.toString()) {
+      return res
+        .status(403)
+        .json({
+          message: "Not authorized. Only the creator can delete this lead.",
+        });
+    }
+
     // 1. Remove this Lead ID from the Assigned Agent's 'leads' array
     if (lead.assignedAgent) {
       await Agent.findByIdAndUpdate(lead.assignedAgent, {

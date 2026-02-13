@@ -74,49 +74,62 @@ const AllLeads = () => {
           </thead>
           <tbody>
             {leads.length > 0 ? (
-              leads.map((lead, index) => (
-                <tr key={lead._id}>
-                  <td>{index + 1}</td>
-                  <td>
-                    <strong>{lead.firstName}</strong>
-                  </td>
-                  <td>{lead.phone}</td>
-                  <td style={{ maxWidth: "200px", fontSize: "0.9rem" }}>
-                    {lead.notes || "-"}
-                  </td>
+              leads.map((lead, index) => {
+                const isCreator = lead.createdBy === userInfo._id;
 
-                  {/* Display Assigned Agent Name */}
-                  <td
-                    style={{
-                      color: lead.assignedAgent ? "#28a745" : "#dc3545",
-                    }}
-                  >
-                    {lead.assignedAgent ? (
-                      <>
-                        <strong>{lead.assignedAgent.name}</strong>
-                      </>
-                    ) : (
-                      <em>Unassigned</em>
-                    )}
-                  </td>
+                return (
+                  <tr key={lead._id}>
+                    <td>{index + 1}</td>
+                    <td>
+                      <strong>{lead.firstName}</strong>
+                    </td>
+                    <td>{lead.phone}</td>
+                    <td style={{ maxWidth: "200px", fontSize: "0.9rem" }}>
+                      {lead.notes || "-"}
+                    </td>
 
-                  <td>
-                    <button
-                      onClick={() => handleDelete(lead._id, lead.firstName)}
+                    {/* Display Assigned Agent Name */}
+                    <td
                       style={{
-                        backgroundColor: "#dc3545",
-                        color: "white",
-                        border: "none",
-                        padding: "6px 12px",
-                        borderRadius: "4px",
-                        cursor: "pointer",
+                        color: lead.assignedAgent ? "#28a745" : "#dc3545",
                       }}
                     >
-                      Delete
-                    </button>
-                  </td>
-                </tr>
-              ))
+                      {lead.assignedAgent ? (
+                        <>
+                          <strong>{lead.assignedAgent.name}</strong>
+                        </>
+                      ) : (
+                        <em>Unassigned</em>
+                      )}
+                    </td>
+
+                    <td>
+                      <button
+                        onClick={() =>
+                          isCreator && handleDelete(lead._id, lead.firstName)
+                        }
+                        disabled={!isCreator}
+                        title={
+                          !isCreator
+                            ? "Only the creator can delete this lead"
+                            : "Delete Lead"
+                        }
+                        style={{
+                          backgroundColor: isCreator ? "#dc3545" : "#dc354687",
+                          color: "white",
+                          border: "none",
+                          padding: "6px 12px",
+                          borderRadius: "4px",
+                          cursor: isCreator ? "pointer" : "not-allowed",
+                          opacity: isCreator ? 1 : 0.6,
+                        }}
+                      >
+                        {isCreator ? "Delete" : "Restricted"}
+                      </button>
+                    </td>
+                  </tr>
+                );
+              })
             ) : (
               <tr>
                 <td colSpan="6" style={{ textAlign: "center" }}>
